@@ -6,6 +6,7 @@ import com.ken.ecommerce.dto.PurchaseResponse;
 import com.ken.ecommerce.entity.Customer;
 import com.ken.ecommerce.entity.Order;
 import com.ken.ecommerce.entity.OrderItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,11 +16,12 @@ import java.util.UUID;
 @Service
 public class CheckoutServiceImpl implements CheckoutService{
 
+    @Autowired
     private CustomerRepository customerRepository;
 
-    private CheckoutServiceImpl(CustomerRepository customerRepository){
-        this.customerRepository = customerRepository;
-    }
+//    private CheckoutServiceImpl(CustomerRepository customerRepository){
+//        this.customerRepository = customerRepository;
+//    }
 
     @Override
     @Transactional
@@ -34,7 +36,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         // populate order with orderItems
         Set<OrderItem> orderItems = purchase.getOrderItems();
-        orderItems.forEach(item -> order.add(item));
+        orderItems.forEach(order::add);
 
         // populate order with billingAddress and shippingAddress
         order.setBillingAddress(purchase.getBillingAddress());
