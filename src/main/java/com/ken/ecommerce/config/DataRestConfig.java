@@ -1,9 +1,6 @@
 package com.ken.ecommerce.config;
 
-import com.ken.ecommerce.entity.Country;
-import com.ken.ecommerce.entity.Product;
-import com.ken.ecommerce.entity.ProductCategory;
-import com.ken.ecommerce.entity.State;
+import com.ken.ecommerce.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -36,17 +33,12 @@ public class DataRestConfig implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PATCH};
 
-        // disable HTTP methods for Product: PUT, POST and DELETE
+        // disable HTTP methods for Product,ProductCategory,Country,State,Order: PUT, POST and DELETE
         disableHttpMethods(Product.class, config, theUnsupportedActions);
-
-        // disable HTTP methods for ProductCategory: PUT, POST and DELETE
         disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
-
-        // disable HTTP methods for Country: PUT, POST and DELETE
         disableHttpMethods(Country.class, config, theUnsupportedActions);
-
-        // disable HTTP methods for State: PUT, POST and DELETE
         disableHttpMethods(State.class, config, theUnsupportedActions);
+        disableHttpMethods(Order.class, config, theUnsupportedActions);
 
         // call an internal helper method
         exposeIds(config);
